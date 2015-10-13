@@ -1,0 +1,88 @@
+navbar
+	section.desktop
+		section.intro
+			h2 
+				a(href='https://teslaos.github.io/') Tesla OS
+				|  × 
+				a(href='https://theroyalstudent.com') theroyalstudent
+			hr
+			a(href='https://teslaos.github.io/stats')
+				p ROMStats Server
+		
+		section.body
+			p This statistics server was started on 21st June 2015, 6pm (UTC).
+			br
+			
+			p Statistics are refreshed every 2 seconds to maintain data accuracy.
+			br
+			
+			p Page built by @theroyalstudent.
+			br
+			
+			p
+				| Last Updated: 
+				span.lastUpdatedDate Updating... 
+			br
+			p
+				a.updateNow.plsWhite(href='#!') Update Now
+
+section.container
+	.stats-large
+		p.text Tesla OS Statistics
+
+	.content
+		section.loaded.hidden
+			#installsByDeviceChart
+			#installsByVersionChart
+			section
+				h4 Total Supported Devices: 
+					span.totalSupportedDevices
+				h4 Total Installs: 
+					span.totalInstalls
+				h4 New Installs in the past day: 
+					span.totalNewInstalls
+				h4 New Updates in the past day: 
+					span.totalNewUpdates
+
+		section.loading
+			h3 Loading data...
+			p Powered by ROMStats Server
+
+
+		// section
+			section.table
+				h2 Total Installs
+				table.totalInstalls
+					thead
+						tr
+							th Type
+							th Total
+					tbody
+						tr
+							td Total Installs
+							td.totalInstalls
+						tr
+							td Installed last 24 Hours
+							td.totalInstallsLast24h
+						tr
+							td Updated last 24 Hours
+							td.totalUpdatesLast24h
+			
+			section.table
+				h2 Installs by Version
+				table.installsVersion
+					thead
+						tr
+							th Build Type
+							th Version
+							th Total
+					tbody.installsByROM
+		
+		// section.table
+			h2 Installs by Device
+			table.installsDevice
+				thead
+					tr
+						th Device
+						th Total
+				tbody.installsByDevice
