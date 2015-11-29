@@ -1,0 +1,62 @@
+navbar
+	section.desktop
+		section.intro
+			h2 
+				a.romDetail(href='') Custom ROM
+				|  × 
+				a(href='https://trackstats.space') TrackStats
+			hr
+			a(href='https://teslaos.github.io/stats')
+				p Statistics
+		
+		section.body
+			p.startInfo
+				| This statistics server was started on 
+				span.startDate
+				| .
+			br.startInfo
+			
+			p 
+				| Statistics are refreshed every 
+				span.updateInterval 1.5
+				|  seconds to maintain data accuracy.
+			br
+			
+			p 
+				| Page built by 
+				a(href='https://theroyalstudent.com').plsWhite Edwin A.
+			br
+			
+			p
+				| Last Updated: 
+				span.lastUpdatedDate Updating... 
+			br
+			p
+				a.updateNow.plsWhite(href='#!') Update Now
+
+section.container
+	section.stats-large
+		p.romName Custom ROM Statistics
+
+	section.content
+		section.loaded.hidden
+			#installsByDeviceChart
+			#installsByVersionChart
+			#installsByBuildChart
+
+			section
+				h4 Total Supported Devices: 
+					span.totalSupportedDevices
+				h4 Total Installs: 
+					span.totalInstalls
+				h4 New Installs in the past day: 
+					span.totalNewInstalls
+				h4 New Updates in the past day: 
+					span.totalNewUpdates
+
+		section.loading
+			h3 Loading data...
+			p 
+				| Powered by 
+				a(href='https://trackstats.space') TrackStats
+
