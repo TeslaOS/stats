@@ -38,25 +38,66 @@ section.container
 	section.stats-large
 		p.romName Custom ROM Statistics
 
-	section.content
-		section.loaded.hidden
-			#installsByDeviceChart
-			#installsByVersionChart
-			#installsByBuildChart
+	section.stats.hidden
+		section.notAvailable.hidden
+			i.line.data-1
+			
+			section.errorMessage
+				h5 No data yet :(
+				p There isn't any data here yet - integrate the TrackStats Tracker App into your custom ROM first!
+				p 
+					| See the 
+					a.setupGuideLink Setup Guide
+					|  for more information.
 
-			section
-				h4 Total Supported Devices: 
-					span.totalSupportedDevices
-				h4 Total Installs: 
-					span.totalInstalls
-				h4 New Installs in the past day: 
-					span.totalNewInstalls
-				h4 New Updates in the past day: 
-					span.totalNewUpdates
+		section.grid-container.data
+			section.figures-text.hidden.mobile-grid-70.tablet-grid-70.grid-60
+				p.distinctDevices
+					| Total Distinct Devices: 
+					span 
+				
+				p.totalInstalls
+					| Total Installs: 
+					span 
+				
+				p.totalInstallsLastDay
+					| Total Installs in the past day: 
+					span 
+				
+				p.totalUpdatesLastDay
+					| Total Updates in the past day: 
+					span 
 
-		section.loading
-			h3 Loading data...
-			p 
-				| Powered by 
-				a(href='https://trackstats.space') TrackStats
+			section.switch.mobile-grid-30.tablet-grid-30.grid-40
+				label
+					| Charts
+					input(type='checkbox')
+					span.lever
+					| Tables
+
+		section.charts.hidden
+			section#installsByDeviceChart
+			section#installsByVersionChart
+			section#installsByBuildChart
+
+		section.tables.grid-container.hidden
+			table.installsByDevice.mobile-grid-100.tablet-grid-45.tablet-suffix-5.grid-30.suffix-3
+				tr
+					th Device Name
+					th Installs
+			table.installsByVersion.mobile-grid-100.tablet-grid-45.tablet-suffix-5.grid-30.suffix-3
+				tr
+					th Version
+					th Installs
+			table.installsByBuild.mobile-grid-100.tablet-grid-100.grid-30.suffix-3
+				tr
+					th Build Type
+					th Installs
+
+
+	section.loading
+		h3 Loading data...
+		p 
+			| Powered by 
+			a(href='https://trackstats.space') TrackStats
 

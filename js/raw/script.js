@@ -4,13 +4,15 @@ var charts = {
 	installByVersion: undefined
 };
 
+var things;
+
 function initialize() {
 	if (configuration['name'] != 'ROM_NAME') {
 		$(document).prop('title', configuration['name'] + ' - Statistics');
 		$('navbar section.desktop section.intro h2 a.romDetail').text(configuration['name']);
 		// $('section.container section.stats-large p.romName').text(configuration['name'] + ' Statistics');
 	}
-	
+
 	$('navbar section.desktop section.intro h2 a.romDetail').attr('href', (configuration['homepageURL'] != 'HOMEPAGE_URL') ? configuration['homepageURL'] : '/' );
 	$('navbar section.desktop section.body p span.updateInterval').text(configuration['updateInterval'] / 1000);
 
@@ -29,7 +31,6 @@ function initialize() {
 
 		configuration['updateInterval'] = 1500;
 	}
-
 }
 
 function doInitialCharting(item, element, text, name, data) {
@@ -94,31 +95,59 @@ function doInitialCharting(item, element, text, name, data) {
 }
 
 function update() {
-	$.get(configuration['endpointURL'] + '/stats', function(data) {
-		$('section.loading').fadeOut(function() { $('section.loaded.hidden').fadeIn(); });
+	$.get(configuration['endpointURL'] + '/stats', function(response) {
+		response = JSON.parse(response);
+		
+		$('section.loading').fadeOut(function() { $('section.stats').fadeIn(); });
 
-		lastFailed = false;
-
-		if (data.status == 'ok') {
-			$('navbar section.desktop section.body p span.lastUpdatedDate').text(Date());
+		if ($('section.stats section.switch input').prop('checked') == false) {
+			$('section.stats section.tables').fadeOut(150, function() {
+				$('section.stats section.charts').fadeIn(150);
+			});
 		}
 
 		else {
-			$('span.totalSupportedDevices').text(data.installsByDevice.length);
-			$('span.totalInstalls').text(data.genericData.totalInstalls);
-			$('span.totalNewInstalls').text(data.genericData.totalInstallsLast24h);
-			$('span.totalNewUpdates').text(data.genericData.totalUpdatesLast24h);
+			$('section.stats section.charts').fadeOut(150, function() {
+				$('section.stats section.tables').fadeIn(150);
+			});
+		}
 
-			var installsByDevice = JSON.parse(JSON.stringify(data.installsByDevice).replace('/{/g', '[').replace('/}/g', ']'));
-			var installsByVersion = JSON.parse(JSON.stringify(data.installsByROM).replace('/{/g', '[').replace('/}/g', ']'));
-			var installsByBuild = JSON.parse(JSON.stringify(data.installsByBuild).replace('/{/g', '[').replace('/}/g', ']'));
+		lastFailed = false;
+
+		if (response.installsByDevice.length) {
+			$('section.stats section.notAvailable').fadeOut();
+			$('section.stats section.figures-text').fadeIn();
+			$('section.stats section.switch').fadeIn();
+
+			$('section.stats section.figures-text p.distinctDevices').children().text(response.installsByDevice.length);
+			$('section.stats section.figures-text p.totalInstalls').children().text(response.genericData.totalInstalls);
+			$('section.stats section.figures-text p.totalInstallsLastDay').children().text(response.genericData.totalInstallsLast24h);
+			$('section.stats section.figures-text p.totalUpdatesLastDay').children().text(response.genericData.totalUpdatesLast24h);
+
+			var installsByDevice = JSON.parse(JSON.stringify(response.installsByDevice).replace('/{/g', '[').replace('/}/g', ']'));
+			var installsByVersion = JSON.parse(JSON.stringify(response.installsByROM).replace('/{/g', '[').replace('/}/g', ']'));
+			var installsByBuild = JSON.parse(JSON.stringify(response.installsByBuild).replace('/{/g', '[').replace('/}/g', ']'));
 
 			doInitialCharting('installByDevice', 'installsByDeviceChart', 'Installs by Device', 'Installs', installsByDevice);
 			doInitialCharting('installsByVersion', 'installsByVersionChart', 'Installs by Version', 'Installs', installsByVersion);
 			doInitialCharting('installsByBuild', 'installsByBuildChart', 'Installs by Build', 'Installs', installsByBuild);
 
-			$('navbar section.desktop section.body p span.lastUpdatedDate').text(Date());
+			$('section.stats section.tables table tr.data').remove(); // remove all old data
+
+			installsByDevice.forEach(function(detail, index) { $('section.stats section.tables table.installsByDevice').append('<tr class="data"><td>' + detail[0] + '</td><td>' + detail[1] + '</td></tr>'); });
+			installsByVersion.forEach(function(detail, index) { $('section.stats section.tables table.installsByVersion').append('<tr class="data"><td>' + detail[0] + '</td><td>' + detail[1] + '</td></tr>'); });
+			installsByBuild.forEach(function(detail, index) { $('section.stats section.tables table.installsByBuild').append('<tr class="data"><td>' + detail[0] + '</td><td>' + detail[1] + '</td></tr>'); });
 		}
+
+		else {
+			$('section.stats section.figures-text').fadeOut();
+			$('section.stats section.charts').fadeOut();
+			$('section.stats section.switch').fadeOut();
+			$('section.stats section.tables').fadeOut();
+			$('section.notAvailable').fadeIn();
+		}
+
+		$('navbar section.desktop section.body p span.lastUpdatedDate').text(Date());
 	}).fail(function() {
 		lastFailed = true;
 
