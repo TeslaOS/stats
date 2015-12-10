@@ -9,8 +9,12 @@ var things;
 function initialize() {
 	if (configuration['name'] != 'ROM_NAME') {
 		$(document).prop('title', configuration['name'] + ' - Statistics');
+		$('section.container section.stats-large p span.romName').text(configuration['name']);
 		$('navbar section.desktop section.intro h2 a.romDetail').text(configuration['name']);
-		// $('section.container section.stats-large p.romName').text(configuration['name'] + ' Statistics');
+	}
+
+	if (configuration['homepageURL'] == 'HOMEPAGE_URL') {
+		$('a.romDetail').attr('href', configuration['homepageURL']);
 	}
 
 	$('navbar section.desktop section.intro h2 a.romDetail').attr('href', (configuration['homepageURL'] != 'HOMEPAGE_URL') ? configuration['homepageURL'] : '/' );
