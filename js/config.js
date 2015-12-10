@@ -1,7 +1,7 @@
 var configuration = {
-	name: 'ROM_NAME', // required, string
-	endpointURL: 'ENDPOINT_URL', // required, string
-	homepageURL: 'HOMEPAGE_URL', // optional, string
-	startDate: 'START_DATE_HERE', // optional, string
+	name: 'Tesla OS', // required, string
+	endpointURL: 'https://teslaos.trackstats.space', // required, string
+	homepageURL: 'https://teslaos.github.io', // optional, string
+	startDate: '1434866400', // optional, string
 	updateInterval: 1500, // optional, integer
 }
