@@ -165,13 +165,13 @@ $(document).ready(function() {
 	$('section.content').load('romstats.ajax.html');
 
 	setTimeout(function() {
-		initialize();
-		update();
+		$.getScript('js/config.js', function() {
+			initialize();
+			update();
 
-		setInterval(function() { update(); }, configuration['updateInterval']);
+			setInterval(function() { update(); }, configuration['updateInterval']);
 
-		$('navbar section.desktop section.body p a.updateNow').click(function() { update(); });
+			$('navbar section.desktop section.body p a.updateNow').click(function() { update(); });
+		});
 	}, 300);
 });
-
-
